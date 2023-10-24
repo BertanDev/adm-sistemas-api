@@ -1,0 +1,5 @@
+# Arquivos gerados localmente
+node_modules/
+
+# Arquivos específicos do ambiente
+.env
