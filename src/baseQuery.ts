@@ -6,6 +6,7 @@ const connectWithRetry = async (): Promise<Database> => {
     const tryConnect = async () => {
       Firebird.attach(dbOptions, (error, db) => {
         if (error) {
+          console.log(error)
           setTimeout(tryConnect, 1000); // Tenta novamente após 1 segundo
         } else {
           resolve(db);
