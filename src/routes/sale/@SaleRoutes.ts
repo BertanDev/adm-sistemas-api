@@ -1,4 +1,4 @@
-import { app } from "../../server";
+import { app } from "../../server.js";
 import { SalesOnCurrentMonth } from "./sales-on-current-month";
 import { SalesOnCurrentMonthMoney } from "./sales-on-current-month-money";
 import { SalesOnPreviousMonth } from "./sales-on-previous-month";

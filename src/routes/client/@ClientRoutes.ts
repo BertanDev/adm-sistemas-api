@@ -1,4 +1,4 @@
-import { app } from "../../server";
+import { app } from "../../server.js";
 import { TotalRegisteredClient } from "./total-registered-client";
 
 const ClientRoutes = async () => {

@@ -1,4 +1,4 @@
-import { app } from "../../server";
+import { app } from "../../server.js";
 import { Employees } from "./employees";
 import { EmployeesFullData } from "./employees-full-data";
 

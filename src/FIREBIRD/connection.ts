@@ -1,3 +1,5 @@
+import { readConfig } from "./readConfig";
+
 type DbOptions = {
 	host: string;
 	port: number;
@@ -14,17 +16,21 @@ type DbOptions = {
 
 const dbOptions = {} as DbOptions
 
-dbOptions.host = 'localhost';
-dbOptions.port = 3050;
-dbOptions.database = 'C:\\BASE\\DADOS.FDB';
-dbOptions.user = 'SYSDBA';
-dbOptions.password = 'masterkey';
-dbOptions.lowercase_keys = false; // set to true to lowercase keys
-dbOptions.role = undefined;            // default
-dbOptions.pageSize = 4096;        // default when creating database
-dbOptions.pageSize = 4096;        // default when creating database
-dbOptions.retryConnectionInterval = 1000; // reconnect interval in case of connection drop
-dbOptions.blobAsText = false; // set to true to get blob as text, only affects blob subtype 1
-// dbOptions.encoding = 'UTF-8'; // default encoding for connection is UTF-8
+async function configConnection() {
+	dbOptions.host = 'localhost';
+	dbOptions.port = 3050;
+	dbOptions.database = await readConfig('BASE');
+	dbOptions.user = 'SYSDBA';
+	dbOptions.password = 'masterkey';
+	dbOptions.lowercase_keys = false; // set to true to lowercase keys
+	dbOptions.role = undefined;            // default
+	dbOptions.pageSize = 4096;        // default when creating database
+	dbOptions.pageSize = 4096;        // default when creating database
+	dbOptions.retryConnectionInterval = 1000; // reconnect interval in case of connection drop
+	dbOptions.blobAsText = false; // set to true to get blob as text, only affects blob subtype 1
+	// dbOptions.encoding = 'UTF-8'; // default encoding for connection is UTF-8
+}
+
+configConnection()
 
 export { dbOptions }

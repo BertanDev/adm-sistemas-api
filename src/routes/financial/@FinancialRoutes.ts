@@ -1,4 +1,4 @@
-import { app } from "../../server";
+import { app } from "../../server.js";
 import { CashAccount } from "./cash-account";
 import { MovementsLastTwelveMonths } from "./movements-last-twelve-months";
 import { TotalBalance } from "./total-balance";

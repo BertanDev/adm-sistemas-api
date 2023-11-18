@@ -42,8 +42,6 @@ export const queryDatabase = async (sql: string) => {
     // Finaliza a conexão
     db!.detach();
 
-    console.log('-----------------------');
-
     if (result.length === 1) {
       return result[0];
     } else {
