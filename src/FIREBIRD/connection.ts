@@ -17,9 +17,10 @@ type DbOptions = {
 const dbOptions = {} as DbOptions
 
 async function configConnection() {
-	dbOptions.host = 'localhost';
+	dbOptions.host = '177.38.13.145';
 	dbOptions.port = 3050;
-	dbOptions.database = await readConfig('BASE');
+	// dbOptions.database = await readConfig('BASE');
+	dbOptions.database = 'C:\\ADMERP\\DADOS.FDB'
 	dbOptions.user = 'SYSDBA';
 	dbOptions.password = 'masterkey';
 	dbOptions.lowercase_keys = false; // set to true to lowercase keys
