@@ -7,7 +7,11 @@
     "dev": "tsx watch src/server.ts",
     "lint": "eslint src --ext .ts --fix",
     "pack": "pkg -t node18-win-x64 --debug dist/server.js",
-    "build": "tsc"
+    "build": "tsc",
+    "start": "node dist/server.js"
+  },
+  "engines": {
+    "node": "18"
   },
   "pkg": {
     "assets": [
