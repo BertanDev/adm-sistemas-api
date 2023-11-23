@@ -9,11 +9,11 @@ app.register(cors, {})
 app.register(routes)
 
 
-app.listen({ port: 8080 }, (err, address) => {
+app.listen({ port: process.env.PORT ? Number(process.env.PORT) : 3333 }, (err, address) => {
   if (err) {
     console.error(err)
   }
-  console.log(`Server listening at ${address}`)
+  console.log(`Server listening`)
 })
 
 export { app }
