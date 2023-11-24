@@ -9,7 +9,7 @@ app.register(cors, {})
 app.register(routes)
 
 
-app.listen({ port: process.env.PORT ? Number(process.env.PORT) : 3333 }, (err, address) => {
+app.listen(3333, (err, address) => {
   if (err) {
     console.error(err)
   }
