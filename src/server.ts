@@ -10,7 +10,7 @@ app.register(routes)
 
 const PORT = 3000
 
-app.listen(PORT, (err, address) => {
+app.listen({port: PORT}, (err, address) => {
   if (err) {
     console.error(err)
   }
@@ -18,7 +18,3 @@ app.listen(PORT, (err, address) => {
 })
 
 export { app }
-
-module.exports = {
-  app
-}
