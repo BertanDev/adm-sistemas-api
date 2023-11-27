@@ -10,7 +10,7 @@ app.register(routes)
 
 const PORT = 3000
 
-app.listen({port: PORT}, (err, address) => {
+app.listen({port: PORT, host: '0.0.0.0'}, (err, address) => {
   if (err) {
     console.error(err)
   }
