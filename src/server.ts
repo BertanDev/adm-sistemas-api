@@ -8,7 +8,7 @@ const app = fastify()
 app.register(cors, {})
 app.register(routes)
 
-const PORT = 80
+const PORT = 3000
 
 app.listen({port: PORT, host: '0.0.0.0'}, (err, address) => {
   if (err) {
