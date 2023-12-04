@@ -8,8 +8,6 @@ const app = fastify()
 app.register(cors, {})
 app.register(routes)
 
-const PORT = 3000
-
 const start = async () => {
   try {
       const PORT = process.env.port || 8080;
