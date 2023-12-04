@@ -17,10 +17,10 @@ type DbOptions = {
 const dbOptions = {} as DbOptions
 
 async function configConnection() {
-	// dbOptions.host = '177.38.13.145';
-	// dbOptions.database = 'C:\\ADMERP\\DADOS.FDB'
-	dbOptions.database = await readConfig('BASE');
-	dbOptions.host = 'localhost';
+	dbOptions.host = '177.38.13.145';
+	dbOptions.database = 'C:\\ADMERP\\DADOS.FDB'
+	// dbOptions.database = await readConfig('BASE');
+	// dbOptions.host = 'localhost';
 	dbOptions.port = 3050;
 	dbOptions.user = 'SYSDBA';
 	dbOptions.password = 'masterkey';
