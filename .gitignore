@@ -5,3 +5,4 @@ server.exe
 
 # Arquivos específicos do ambiente
 .env
+.vercel
