@@ -1,0 +1,7 @@
+# Arquivos gerados localmente
+node_modules/
+dist/
+server.exe
+
+# Arquivos específicos do ambiente
+.env
