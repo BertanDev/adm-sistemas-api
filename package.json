@@ -11,7 +11,7 @@
     "start": "node public/server.js"
   },
   "engines": {
-    "node": "18"
+    "node": "16"
   },
   "pkg": {
     "assets": [
