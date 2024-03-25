@@ -15,12 +15,12 @@ export type DbOptions = {
 }
 
 const dbOptions = {
-  host: '',
+  // host: '',
   database: '',
   // host: '177.38.13.145',
   // database: 'C:\\ADMERP\\DADOS.FDB',
   // database: 'C:\\ADMERP\\DADOS-adm-ultima.FDB'
-  // host: 'localhost';
+  host: 'localhost',
   // database: await readConfig('BASE');
   port: 3050,
   user: 'SYSDBA',

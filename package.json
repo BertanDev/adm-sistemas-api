@@ -6,9 +6,9 @@
   "scripts": {
     "dev": "tsx watch src/server.ts",
     "lint": "eslint ./src --ext .ts --fix",
-    "pack": "pkg -t node18-win-x64 --debug public/server.js",
-    "build": "tsc --outDir public",
-    "start": "node public/server.js"
+    "pack": "pkg -t node18-win-x64 --debug dist/server.js",
+    "build": "tsc --outDir dist",
+    "start": "node dist/server.js"
   },
   "engines": {
     "node": "16"

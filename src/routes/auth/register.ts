@@ -56,8 +56,6 @@ export const Register = async (app: FastifyInstance) => {
 
       const hashedPassword = await bcrypt.hash(password, 8)
 
-      console.log(req.body)
-
       await prismaClient.user.create({
         data: {
           email,
