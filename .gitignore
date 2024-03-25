@@ -2,7 +2,9 @@
 node_modules/
 dist/
 server.exe
+prisma/dev.db
+prisma/migrations/
 
 # Arquivos específicos do ambiente
-.env
+# .env
 .vercel
