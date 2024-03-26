@@ -11,7 +11,9 @@
 	  },
 	  {
 		"name": "dashboard",
-		"script": "../adm-sistemas-dashboard/.next/server/app/index.html", 
+		"script": "node_modules/next/dist/bin/next",
+		"args": "start",
+		"cwd": "./",
 		"instances": "max", 
 		"exec_mode": "cluster", 
 		"env": {
@@ -20,7 +22,9 @@
 	  },
 	  {
 		"name": "internal-panel",
-		"script": "../adm-sistemas-internal-panel/.next/server/app/index.html", 
+		"script": "node_modules/next/dist/bin/next",
+		"args": "start",
+		"cwd": "./",
 		"instances": "max", 
 		"exec_mode": "cluster", 
 		"env": {
