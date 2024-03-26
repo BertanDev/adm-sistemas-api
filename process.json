@@ -1,0 +1,31 @@
+{
+	"apps": [
+	  {
+		"name": "server",
+		"script": "./dist/server.js", 
+		"instances": "max", 
+		"exec_mode": "cluster", 
+		"env": {
+		  "NODE_ENV": "production"
+		}
+	  },
+	  {
+		"name": "dashboard",
+		"script": "../adm-sistemas-dashboard/.next/server/app/index.html", 
+		"instances": "max", 
+		"exec_mode": "cluster", 
+		"env": {
+		  "NODE_ENV": "production"
+		}
+	  },
+	  {
+		"name": "internal-panel",
+		"script": "../adm-sistemas-internal-panel/.next/server/app/index.html", 
+		"instances": "max", 
+		"exec_mode": "cluster", 
+		"env": {
+		  "NODE_ENV": "production"
+		}
+	  }
+	]
+  }
