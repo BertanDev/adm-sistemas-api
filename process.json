@@ -11,7 +11,7 @@
 	  },
 	  {
 		"name": "dashboard",
-		"script": "node_modules/next/dist/bin/next",
+		"script": "../adm-sistemas-dashboard/node_modules/next/dist/bin/next",
 		"args": "start",
 		"autorestart": true,
 		"instances": "max", 
@@ -19,7 +19,7 @@
 	  },
 	  {
 		"name": "internal-panel",
-		"script": "node_modules/next/dist/bin/next",
+		"script": "../adm-sistemas-internal-panel/node_modules/next/dist/bin/next",
 		"args": "start",
 		"autorestart": true,
 		"instances": "max", 
