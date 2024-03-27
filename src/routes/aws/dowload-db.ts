@@ -49,7 +49,7 @@ export const AwsRoute = async (app: FastifyInstance) => {
     })) as { aws_folder: string }
 
     const s3Client = new S3Client({
-      region: 'sa-east-1',
+      region: 'us-east-1',
       credentials: {
         accessKeyId: process.env.AWS_ACESS_KEY as string,
         secretAccessKey: process.env.AWS_SECRET_KEY as string,
@@ -60,13 +60,17 @@ export const AwsRoute = async (app: FastifyInstance) => {
     const MMYYYY = dayjs(new Date()).format('MM-YYYY')
 
     const params = {
-      Bucket: 'bkpclientes-bertan',
+      Bucket: 'bkpclientes',
       Prefix: `${MMYYYY}/${aws_folder}/`,
     }
 
     const objects = new ListObjectsCommand(params)
 
+    console.log(objects)
+
     const resObjects = await s3Client.send(objects)
+
+    console.log(resObjects)
 
     let mostRecentObject
     if (resObjects.Contents) {
@@ -76,7 +80,7 @@ export const AwsRoute = async (app: FastifyInstance) => {
 
     const getObjectURL = async (key: string) => {
       const command = new GetObjectCommand({
-        Bucket: 'bkpclientes-bertan',
+        Bucket: 'bkpclientes',
         Key: key,
       })
 

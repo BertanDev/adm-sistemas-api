@@ -1,9 +1,11 @@
 # Arquivos gerados localmente
 node_modules/
+dbs/
+temporaryDatabases/
 dist/
 server.exe
-prisma/dev.db
-prisma/migrations/
+prisma/
+!/prisma/schema.prisma
 
 # Arquivos específicos do ambiente
 .env
