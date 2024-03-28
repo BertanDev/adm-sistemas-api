@@ -192,24 +192,40 @@ export const AwsRoute = async (app: FastifyInstance) => {
       setTimeout(resolve, 5 * 1000) // Aguarda 5 segundos
     })
 
-    async function copiarArquivo(origem: string, destino: string) {
+    // async function copiarArquivo(origem: string, destino: string) {
+    //   try {
+    //     // Lê o conteúdo do arquivo de origem
+    //     const conteudo = await fsp.readFile(origem)
+
+    //     // Escreve o conteúdo no arquivo de destino
+    //     await fsp.writeFile(destino, conteudo)
+
+    //     console.log('Arquivo copiado com sucesso!')
+    //   } catch (err) {
+    //     console.error('Erro ao copiar o arquivo:', err)
+    //   }
+    // }
+
+    // await copiarArquivo(
+    //   `dbs/${aws_folder}/DADOS.BKP`,
+    //   `dbs/${aws_folder}/DADOS.FDB`,
+    // )
+
+    async function renomearArquivo(origem: string, destino: string) {
       try {
-        // Lê o conteúdo do arquivo de origem
-        const conteudo = await fsp.readFile(origem)
-
-        // Escreve o conteúdo no arquivo de destino
-        await fsp.writeFile(destino, conteudo)
-
-        console.log('Arquivo copiado com sucesso!')
+        // Renomeia o arquivo
+        await fsp.rename(origem, destino)
       } catch (err) {
-        console.error('Erro ao copiar o arquivo:', err)
+        console.error('Erro ao renomear o arquivo:', err)
       }
     }
 
-    await copiarArquivo(
-      `dbs/${aws_folder}/DADOS.BKP`,
-      `dbs/${aws_folder}/DADOS.FDB`,
-    )
+    // Constrói os caminhos completos para os arquivos
+    const origem = `/home/dashboard-app/adm-sistemas-api/dbs/${aws_folder}/DADOS.BKP`
+    const destino = `/home/dashboard-app/adm-sistemas-api/dbs/${aws_folder}/DADOS.FDB`
+
+    // Chama a função para renomear o arquivo
+    await renomearArquivo(origem, destino)
 
     // Caminho para a sua pasta
     const fdbFolder = `/home/dashboard-app/adm-sistemas-api/dbs/${aws_folder}/DADOS.FDB`
