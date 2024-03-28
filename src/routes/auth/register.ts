@@ -62,7 +62,7 @@ export const Register = async (app: FastifyInstance) => {
           encrypted_password: hashedPassword,
           database_ip: use_backup ? 'localhost' : database_ip,
           firebird_path_database: use_backup
-            ? `${process.env.BACKUP_LOCAL}\\dbs\\${aws_folder}\\DADOS.FDB`
+            ? `${process.env.BACKUP_LOCAL}/dbs/${aws_folder}/DADOS.FDB`
             : database_path,
           name,
           cnpj,

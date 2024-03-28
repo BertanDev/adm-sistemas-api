@@ -12,6 +12,7 @@ import {
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
 import Seven from 'node-7z'
 import sevenBin from '7zip-bin'
+import { exec } from 'node:child_process'
 
 //* * Rota da aws */
 
@@ -197,6 +198,25 @@ export const AwsRoute = async (app: FastifyInstance) => {
       } else {
         console.log('BKP excluído com sucesso')
       }
+    })
+
+    // Caminho para a sua pasta
+    const pasta = `/home/dashboard-app/adm-sistemas-api/dbs/${aws_folder}`
+
+    // Comando chmod para conceder permissões 777 à pasta
+    const comando = `sudo chmod 777 ${pasta}`
+
+    // Executar o comando no sistema operacional
+    exec(comando, (erro, stdout, stderr) => {
+      if (erro) {
+        console.error(`Erro ao executar o comando: ${erro.message}`)
+        return
+      }
+      if (stderr) {
+        console.error(`Erro ao executar o comando: ${stderr}`)
+        return
+      }
+      console.log(`Permissões alteradas com sucesso para ${pasta}`)
     })
 
     return reply.status(200).send('AWS Route OK!' + url)

@@ -5,7 +5,7 @@ temporaryDatabases/
 dist/
 server.exe
 prisma/
-!/prisma/schema.prisma
+# !/prisma/schema.prisma
 
 # Arquivos específicos do ambiente
 .env
