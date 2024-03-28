@@ -10,3 +10,4 @@ prisma/
 # Arquivos específicos do ambiente
 .env
 .vercel
+.env-save
