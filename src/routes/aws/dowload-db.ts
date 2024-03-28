@@ -211,13 +211,32 @@ export const AwsRoute = async (app: FastifyInstance) => {
       `dbs/${aws_folder}/DADOS.FDB`,
     )
 
-    fs.unlink(`dbs/${aws_folder}/DADOS.BKP`, (err) => {
-      if (err) {
-        console.log('Erro ao excluir BKP: ', err)
-      } else {
-        console.log('BKP excluído com sucesso')
+    // Caminho para a sua pasta
+    const fdbFolder = `/home/dashboard-app/adm-sistemas-api/dbs/${aws_folder}/DADOS.FDB`
+
+    // Comando chmod para conceder permissões 777 à pasta
+    const fdbCommand = `sudo chmod 777 ${fdbFolder}`
+
+    // Executar o comando no sistema operacional
+    exec(fdbCommand, (erro, stdout, stderr) => {
+      if (erro) {
+        console.error(`Erro ao executar o comando: ${erro.message}`)
+        return
       }
+      if (stderr) {
+        console.error(`Erro ao executar o comando: ${stderr}`)
+        return
+      }
+      console.log(`Permissões alteradas com sucesso para ${fdbFolder}`)
     })
+
+    // fs.unlink(`dbs/${aws_folder}/DADOS.BKP`, (err) => {
+    //   if (err) {
+    //     console.log('Erro ao excluir BKP: ', err)
+    //   } else {
+    //     console.log('BKP excluído com sucesso')
+    //   }
+    // })
 
     // Caminho para a sua pasta
     const dbsFolder = `/home/dashboard-app/adm-sistemas-api/dbs/${aws_folder}`
