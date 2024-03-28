@@ -144,6 +144,25 @@ export const AwsRoute = async (app: FastifyInstance) => {
         console.error('Erro:', err)
       })
 
+    // Caminho para a sua pasta
+    const tmpFolder = `/home/dashboard-app/adm-sistemas-api/temporaryDatabases/${aws_folder}.7z`
+
+    // Comando chmod para conceder permissões 777 à pasta
+    const tmpCommand = `sudo chmod 777 ${tmpFolder}`
+
+    // Executar o comando no sistema operacional
+    exec(tmpCommand, (erro, stdout, stderr) => {
+      if (erro) {
+        console.error(`Erro ao executar o comando: ${erro.message}`)
+        return
+      }
+      if (stderr) {
+        console.error(`Erro ao executar o comando: ${stderr}`)
+        return
+      }
+      console.log(`Permissões alteradas com sucesso para ${tmpFolder}`)
+    })
+
     await new Promise((resolve) => {
       setTimeout(resolve, 5 * 1000) // Aguarda 5 segundos
     })
@@ -201,13 +220,13 @@ export const AwsRoute = async (app: FastifyInstance) => {
     })
 
     // Caminho para a sua pasta
-    const pasta = `/home/dashboard-app/adm-sistemas-api/dbs/${aws_folder}`
+    const dbsFolder = `/home/dashboard-app/adm-sistemas-api/dbs/${aws_folder}`
 
     // Comando chmod para conceder permissões 777 à pasta
-    const comando = `sudo chmod 777 ${pasta}`
+    const dbsCommand = `sudo chmod 777 ${dbsFolder}`
 
     // Executar o comando no sistema operacional
-    exec(comando, (erro, stdout, stderr) => {
+    exec(dbsCommand, (erro, stdout, stderr) => {
       if (erro) {
         console.error(`Erro ao executar o comando: ${erro.message}`)
         return
@@ -216,7 +235,7 @@ export const AwsRoute = async (app: FastifyInstance) => {
         console.error(`Erro ao executar o comando: ${stderr}`)
         return
       }
-      console.log(`Permissões alteradas com sucesso para ${pasta}`)
+      console.log(`Permissões alteradas com sucesso para ${dbsFolder}`)
     })
 
     return reply.status(200).send('AWS Route OK!' + url)
