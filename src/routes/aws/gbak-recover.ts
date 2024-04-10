@@ -36,6 +36,7 @@ export const GBAKRecover = async (app: FastifyInstance) => {
       try {
         const { stdout, stderr } = await exec(DBRestore, {
           cwd: process.env.FIREBIRD_PATH,
+          maxBuffer: 1024 * 1024 * 1024,
         })
         console.log('stdout: ', stdout)
         console.error('stderr: ', stderr)
