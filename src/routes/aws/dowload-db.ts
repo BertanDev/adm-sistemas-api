@@ -12,7 +12,10 @@ import {
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
 import Seven from 'node-7z'
 import sevenBin from '7zip-bin'
-import { exec } from 'node:child_process'
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const { promisify } = require('util')
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const exec = promisify(require('child_process').exec)
 
 //* * Rota da aws */
 
@@ -40,14 +43,18 @@ export const AwsRoute = async (app: FastifyInstance) => {
       }
     }
 
-    const { aws_folder } = (await prismaClient.user.findFirst({
+    const { aws_folder, id } = (await prismaClient.user.findFirst({
       where: {
         id: userId,
       },
       select: {
         aws_folder: true,
+        id: true,
       },
-    })) as { aws_folder: string }
+    })) as {
+      aws_folder: string
+      id: string
+    }
 
     const s3Client = new S3Client({
       region: 'us-east-1',
@@ -67,11 +74,7 @@ export const AwsRoute = async (app: FastifyInstance) => {
 
     const objects = new ListObjectsCommand(params)
 
-    console.log(objects)
-
     const resObjects = await s3Client.send(objects)
-
-    console.log(resObjects)
 
     let mostRecentObject
     if (resObjects.Contents) {
@@ -93,6 +96,10 @@ export const AwsRoute = async (app: FastifyInstance) => {
     if (mostRecentObject) {
       objectKey = mostRecentObject.Key as string
     }
+
+    const regexGBAK = /\/([^/]*\/)(?=.*?GBAK)/
+
+    const isGBAK = regexGBAK.test(objectKey)
 
     // Pegar a data do backup para salvar no banco
     const match = objectKey.match(/(\d{2}-\d{2}-\d{4}_\d{2}-\d{2}-\d{2})/)
@@ -151,7 +158,7 @@ export const AwsRoute = async (app: FastifyInstance) => {
     const tmpCommand = `sudo chmod 777 ${tmpFolder}`
 
     // Executar o comando no sistema operacional
-    exec(tmpCommand, (erro, stdout, stderr) => {
+    exec(tmpCommand, (erro: { message: any }, stdout: any, stderr: any) => {
       if (erro) {
         console.error(`Erro ao executar o comando: ${erro.message}`)
         return
@@ -192,25 +199,6 @@ export const AwsRoute = async (app: FastifyInstance) => {
       setTimeout(resolve, 5 * 1000) // Aguarda 5 segundos
     })
 
-    // async function copiarArquivo(origem: string, destino: string) {
-    //   try {
-    //     // Lê o conteúdo do arquivo de origem
-    //     const conteudo = await fsp.readFile(origem)
-
-    //     // Escreve o conteúdo no arquivo de destino
-    //     await fsp.writeFile(destino, conteudo)
-
-    //     console.log('Arquivo copiado com sucesso!')
-    //   } catch (err) {
-    //     console.error('Erro ao copiar o arquivo:', err)
-    //   }
-    // }
-
-    // await copiarArquivo(
-    //   `dbs/${aws_folder}/DADOS.BKP`,
-    //   `dbs/${aws_folder}/DADOS.FDB`,
-    // )
-
     async function renomearArquivo(origem: string, destino: string) {
       try {
         // Renomeia o arquivo
@@ -221,11 +209,21 @@ export const AwsRoute = async (app: FastifyInstance) => {
     }
 
     // Constrói os caminhos completos para os arquivos
-    const origem = `/home/dashboard-app/adm-sistemas-api/dbs/${aws_folder}/DADOS.BKP`
-    const destino = `/home/dashboard-app/adm-sistemas-api/dbs/${aws_folder}/DADOS.FDB`
+    const origem = `${process.env.BACKUP_LOCAL}/dbs/${aws_folder}/DADOS.BKP`
+    const destino = `${process.env.BACKUP_LOCAL}/dbs/${aws_folder}/DADOS.FDB`
 
-    // Chama a função para renomear o arquivo
-    await renomearArquivo(origem, destino)
+    // Chama a função para renomear o arquivo quando não é GBAK
+    if (!isGBAK) {
+      await renomearArquivo(origem, destino)
+    }
+
+    if (isGBAK) {
+      await api.get('http://localhost:8080/gbak-recover', {
+        params: {
+          userId: id,
+        },
+      })
+    }
 
     // Caminho para a sua pasta
     const fdbFolder = `/home/dashboard-app/adm-sistemas-api/dbs/${aws_folder}/DADOS.FDB`
@@ -234,7 +232,7 @@ export const AwsRoute = async (app: FastifyInstance) => {
     const fdbCommand = `sudo chmod 777 ${fdbFolder}`
 
     // Executar o comando no sistema operacional
-    exec(fdbCommand, (erro, stdout, stderr) => {
+    exec(fdbCommand, (erro: { message: any }, stdout: any, stderr: any) => {
       if (erro) {
         console.error(`Erro ao executar o comando: ${erro.message}`)
         return
@@ -246,14 +244,6 @@ export const AwsRoute = async (app: FastifyInstance) => {
       console.log(`Permissões alteradas com sucesso para ${fdbFolder}`)
     })
 
-    // fs.unlink(`dbs/${aws_folder}/DADOS.BKP`, (err) => {
-    //   if (err) {
-    //     console.log('Erro ao excluir BKP: ', err)
-    //   } else {
-    //     console.log('BKP excluído com sucesso')
-    //   }
-    // })
-
     // Caminho para a sua pasta
     const dbsFolder = `/home/dashboard-app/adm-sistemas-api/dbs/${aws_folder}`
 
@@ -261,7 +251,7 @@ export const AwsRoute = async (app: FastifyInstance) => {
     const dbsCommand = `sudo chmod 777 ${dbsFolder}`
 
     // Executar o comando no sistema operacional
-    exec(dbsCommand, (erro, stdout, stderr) => {
+    exec(dbsCommand, (erro: { message: any }, stdout: any, stderr: any) => {
       if (erro) {
         console.error(`Erro ao executar o comando: ${erro.message}`)
         return

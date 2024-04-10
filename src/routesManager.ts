@@ -1,5 +1,6 @@
 import { AuthRoutes } from './routes/auth/@AuthRoutes'
 import { AwsRoute } from './routes/aws/dowload-db'
+import { GBAKRecover } from './routes/aws/gbak-recover'
 import { ClientRoutes } from './routes/client/@ClientRoutes'
 import { CompanyRoutes } from './routes/company/@CompanyRoutes'
 import { FinancialRoutes } from './routes/financial/@FinancialRoutes'
@@ -23,6 +24,7 @@ const routes = async () => {
   app.register(PurchaseRoutes)
   app.register(SuppliersRoutes)
   app.register(AwsRoute)
+  app.register(GBAKRecover)
 }
 
 export { routes }
