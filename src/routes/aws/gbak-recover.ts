@@ -26,9 +26,9 @@ export const GBAKRecover = async (app: FastifyInstance) => {
       },
     )
 
-    let DBRestore = `gbak -c -v -user sysdba -password masterkey ${process.env.BACKUP_LOCAL}\\dbs\\${user?.aws_folder}\\DADOS.BKP `
+    let DBRestore = `gbak -c -v -user sysdba -password masterkey ${process.env.BACKUP_LOCAL}/dbs/${user?.aws_folder}/DADOS.BKP `
 
-    DBRestore += `${process.env.BACKUP_LOCAL}\\dbs\\${user?.aws_folder}\\DADOS.FDB`
+    DBRestore += `${process.env.BACKUP_LOCAL}/dbs/${user?.aws_folder}/DADOS.FDB`
 
     console.log('--->>', DBRestore, '<<---')
 
