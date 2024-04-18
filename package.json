@@ -7,6 +7,7 @@
     "dev": "tsx watch src/server.ts",
     "lint": "eslint ./src --ext .ts --fix",
     "pack": "pkg -t node18-win-x64 --debug dist/server.js",
+    "pack-exec": "pkg -t node18-win-x64 --debug exec.app.js",
     "build": "tsc --outDir dist",
     "start": "node dist/server.js"
   },

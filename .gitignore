@@ -4,7 +4,8 @@ dbs/
 temporaryDatabases/
 dist/
 server.exe
-prisma/
+prisma/dev.db
+prisma/migrations
 # !/prisma/schema.prisma
 
 # Arquivos específicos do ambiente
