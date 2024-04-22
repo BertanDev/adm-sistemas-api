@@ -28,8 +28,8 @@ app.register(jwt, {
 // start()
 
 // Para uso em dev
-app.listen({ port: 8080 }, () => {
-  console.log('SERVER LISTENING AT PORT 8080')
+app.listen({ port: 8081 }, () => {
+  console.log('SERVER LISTENING AT PORT 8081')
 })
 
 export { app }
