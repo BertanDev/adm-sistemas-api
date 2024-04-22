@@ -36,7 +36,6 @@ export const TopTenBestSellers = async (app: FastifyInstance) => {
         const result = await queryDatabase(sql, dbUserptions)
         return reply.status(200).send(result)
       } catch (error) {
-        1
         console.error('Error:', error)
       }
     },

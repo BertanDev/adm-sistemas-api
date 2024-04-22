@@ -23,6 +23,9 @@ export const ABCSuppliers = async (app: FastifyInstance) => {
 
       const formatInitialDate = dayjs(initialDate).format('DD[.]MM[.]YYYY')
       const formatFinishDate = dayjs(finishDate).format('DD[.]MM[.]YYYY')
+      console.log(formatInitialDate)
+      console.log(formatFinishDate)
+
       try {
         const sql = `
             select cf.codi, cf.nome, sum(ep.tota_nf) as TOTAL from entr_prod ep
@@ -32,11 +35,14 @@ export const ABCSuppliers = async (app: FastifyInstance) => {
             order by 3 desc
         `
 
-        const result = await queryDatabase(sql, dbUserptions)
+        let result = await queryDatabase(sql, dbUserptions)
+
+        if (!Array.isArray(result)) {
+          result = [result]
+        }
 
         return reply.status(200).send(result)
       } catch (error) {
-        1
         console.error('Error:', error)
       }
     },
