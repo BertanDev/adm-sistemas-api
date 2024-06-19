@@ -21,7 +21,13 @@ export const CountClientsPerState = async (app: FastifyInstance) => {
         WHERE cf.tipocad IN ('C', 'A')  AND cf.uf IS NOT NULL
         GROUP BY cf.uf
         ORDER BY total_registros DESC`
-        const result = await queryDatabase(sql, dbUserptions)
+
+        let result = await queryDatabase(sql, dbUserptions)
+
+        if (!Array.isArray(result)) {
+          result = [result]
+        }
+
         return reply.status(200).send(result)
       } catch (error) {
         console.error('Error:', error)
