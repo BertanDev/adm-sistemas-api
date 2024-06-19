@@ -21,8 +21,12 @@ export const CashAccount = async (app: FastifyInstance) => {
 				CODI, NOME, SALD
 			FROM CONT
 			`
-        const cashAccounts = (await queryDatabase(sql, dbUserptions)) as {
-          TOTAL: number
+        const result = await queryDatabase(sql, dbUserptions)
+
+        let cashAccounts = result
+
+        if (!Array.isArray(result)) {
+          cashAccounts = [result]
         }
 
         return reply.status(200).send(cashAccounts)
