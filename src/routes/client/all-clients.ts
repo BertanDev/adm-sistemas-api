@@ -16,12 +16,14 @@ export const AllClients = async (app: FastifyInstance) => {
       )) as DbOptions
 
       try {
-        const sql = `SELECT nome, codi FROM clieforn where tipocad in ('A', 'C') order by nome`
+        const sql = `SELECT nome, codi FROM clieforn where tipocad in ('A', 'C') and nome <> '' order by nome`
         let result = await queryDatabase(sql, dbUserptions)
 
         if (!Array.isArray(result)) {
           result = [result]
         }
+
+        console.log(result)
 
         return reply.status(200).send(result)
       } catch (error) {
