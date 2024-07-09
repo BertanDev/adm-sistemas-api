@@ -62,7 +62,7 @@ export const Login = async (app: FastifyInstance) => {
 
         if (!razao_empre) {
           return reply
-            .status(401)
+            .status(405)
             .send({ message: 'Base de dados inoperante.' })
         }
       }
